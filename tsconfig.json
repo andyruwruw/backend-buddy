@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "./src/types",
+    ],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "outDir": "bin",
+  },
+  "exclude": [
+    "./jest.config.js"
+  ]
+}

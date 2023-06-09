@@ -1,0 +1,279 @@
+{
+  "name": "server",
+  "description": "An example JSON template.",
+  "types": [
+    "vercel",
+    "express",
+    "websocket"
+  ],
+  "databases": [
+    "sql",
+    "mongo",
+    "cache"
+  ],
+  "testing": true,
+  "linting": true,
+  "functionalities": {
+    "authentication": {
+      "enable": true,
+      "uses-password": true,
+      "maintain-sessions": true,
+      "cookie-name": "My-Cookie",
+      "user-table": "User"
+    }
+  },
+  "tables": [
+    {
+      "name": "Album",
+      "links": {
+        "AlbumArtist": "Artist",
+        "AlbumGenre": "Genre",
+        "AlbumTrack": "Track"
+      },
+      "schema": [
+        {
+          "key": "id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "popularity",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "key": "albumType",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "image",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "releaseDate",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "releaseDatePrecision",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "totalTracks",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "functions": {
+        "create": true,
+        "update": true,
+        "delete": true,
+        "get": true,
+        "get-many": true
+      }
+    },
+    {
+      "name": "Artist",
+      "links": {
+        "AlbumArtist": "Album",
+        "ArtistGenre": "Genre",
+        "TrackArtist": "Track",
+        "PlaylistArtist": "Playlist"
+      },
+      "schema": [
+        {
+          "key": "id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "followers",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "key": "popularity",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "image",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "functions": {
+        "create": true,
+        "update": true,
+        "delete": true,
+        "get": true,
+        "get-many": true
+      }
+    },
+    {
+      "name": "Genre",
+      "links": {
+        "AlbumGenre": "Album",
+        "ArtistGenre": "Artist"
+      },
+      "schema": [
+        {
+          "key": "id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "functions": {
+        "create": true,
+        "update": true,
+        "delete": true,
+        "get": true,
+        "get-many": true
+      }
+    },
+    {
+      "name": "Playlist",
+      "links": {
+        "PlaylistTrack": {
+          "table": "Track",
+          "additional-fields": [
+            {
+              "key": "added-at",
+              "type": "string",
+              "required": true
+            },
+            {
+              "key": "added-by",
+              "type": "string",
+              "required": true
+            },
+            {
+              "key": "local",
+              "type": "boolean",
+              "required": true
+            }
+          ]
+        },
+        "PlaylistArtist": {
+          "table": "Artist",
+          "additional-fields": [
+            {
+              "key": "totalTracks",
+              "type": "number",
+              "required": true
+            }
+          ]
+        },
+        "UserPlaylist": "User"
+      },
+      "schema": [
+        {
+          "key": "id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "followers",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "key": "image",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "owner",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "primary-color",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "public",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "key": "snapshot-id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "totalTracks",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "functions": {
+        "create": true,
+        "update": true,
+        "delete": true,
+        "get": true,
+        "get-many": true
+      }
+    },
+    {
+      "name": "User",
+      "links": {
+        "UserSavedTrack": {
+          "table": "Track",
+          "additional-fields": [
+            {
+              "key": "added-at",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        "UserFollowedArtist": {
+          "table": "Artist",
+          "additional-fields": [
+            {
+              "key": "followed-at",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        "UserPlaylist": "Playlist",
+        "UserFollowedPlaylist": "Playlist"
+      },
+      "schema": [
+        {
+          "key": "id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "functions": {
+        "create": true,
+        "update": true,
+        "delete": true,
+        "get": true,
+        "get-many": true
+      }
+    }
+  ]
+}
