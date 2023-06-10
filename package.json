@@ -2,14 +2,14 @@
   "name": "backend-buddy",
   "version": "1.0.0",
   "description": "Creates backend system using a template JSON.",
-  "main": "index.js",
+  "main": "./bin/index.js",
   "bin": {
     "backend-buddy": "./bin/index.js"
   },
   "scripts": {
     "prepare": "npm install -g .",
     "build": "tsc --build",
-    "start": "nodemon --config nodemon.json src/index.ts",
+    "start": "nodemon --config nodemon.json src/index.ts generate ./example.json",
     "clean": "rimraf ./bin && echo 'All clean now!'",
     "test": "jest --colors",
     "test:verbose": "jest --verbose --colors",

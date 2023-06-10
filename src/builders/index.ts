@@ -1,6 +1,6 @@
 // Local Exports
 export { ConfigBuilder } from './config-builder';
-export { DatabaseBuilder } from './database-builder';
+export { DatabaseBuilder } from './database';
 export { EndpointBuilder } from './endpoint-builder';
 export { ErrorBuilder } from './error-builder';
 export { HandlerBuilder } from './handler-builder';

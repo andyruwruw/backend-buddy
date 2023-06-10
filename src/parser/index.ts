@@ -1,6 +1,2 @@
-/**
- * Parses files.
- */
-export class Parser {
-
-}
+// Local Exports
+export { TemplateParser } from './template-parser';
