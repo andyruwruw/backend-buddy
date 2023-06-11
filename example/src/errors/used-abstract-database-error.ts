@@ -1,11 +1,11 @@
 // Local Imports
-import { MESSAGE_USED_ABSTRACT_DAO_ERROR } from '../config/messages';
+import { MESSAGE_USED_ABSTRACT_DATABASE_ERROR } from '../config/messages';
 
 /**
- * Abstract Data Access Object Class Used Error.
+ * Abstract Database Class Used Error.
  */
-export class UsedAbstractDAOError extends Error {
+export class UsedAbstractDatabaseError extends Error {
   constructor() {
-    super(MESSAGE_USED_ABSTRACT_DAO_ERROR);
+    super(MESSAGE_USED_ABSTRACT_DATABASE_ERROR);
   }
 }

@@ -1,5 +1,5 @@
 // Local Imports
-import { Builder } from './builder';
+import { Builder } from '../builder';
 
 /**
  * Builds the config sub-layer.

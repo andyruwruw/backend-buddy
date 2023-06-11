@@ -1,8 +1,8 @@
 // Local Exports
-export { ConfigBuilder } from './config-builder';
+export { ConfigBuilder } from './config/config-builder';
 export { DatabaseBuilder } from './database';
-export { EndpointBuilder } from './endpoint-builder';
-export { ErrorBuilder } from './error-builder';
-export { HandlerBuilder } from './handler-builder';
-export { HelperBuilder } from './helper-builder.ts';
-export { TypesBuilder } from './types-builder';
+export { EndpointBuilder } from './endpoints';
+export { ErrorBuilder } from './errors';
+export { HandlerBuilder } from './handlers';
+export { HelperBuilder } from './helpers';
+export { TypesBuilder } from './types';

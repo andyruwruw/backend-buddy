@@ -9,7 +9,7 @@
   "scripts": {
     "prepare": "npm install -g .",
     "build": "tsc --build",
-    "start": "nodemon --config nodemon.json src/index.ts generate ./example.json",
+    "start": "nodemon --config nodemon.json src/index.ts generate ./example.json ./test",
     "clean": "rimraf ./bin && echo 'All clean now!'",
     "test": "jest --colors",
     "test:verbose": "jest --verbose --colors",

@@ -11,16 +11,24 @@ import { CommandTool } from './command-tool';
 const tool = new CommandTool();
 
 yargs(hideBin(process.argv))
-  .command('generate [template]', 'Generate backend based on a template JSON.', (yargs) => {
-    return yargs
-      .positional('template', {
-        describe: 'JSON template file.',
-        default: './template.json',
-      });
-  }, (argv) => {
-    tool.loadArgs(argv);
-    tool.generate();
-  })
+  .command(
+    'generate <template> [out]',
+    'Generate backend based on a template JSON.',
+    (yargs) => {
+      // Help print.
+      return yargs
+        .positional('template', {
+          describe: 'JSON template file.',
+          default: './template.json',
+        }).positional('out', {
+          describe: 'Directory to output.',
+          default: '.',
+        });
+    }, (argv) => {
+      // Run command.
+      tool.loadArgs(argv);
+      tool.generate();
+    })
   .option('verbose', {
     alias: 'v',
     type: 'boolean',

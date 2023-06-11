@@ -1,6 +1,7 @@
 // Types
-import { CommandArguments } from './types';
+import { CommandArguments } from './types/template';
 import { TemplateParser } from './parser';
+import { Builder } from './builders/builder';
 
 /**
  * Handles interactions between system
@@ -8,9 +9,9 @@ import { TemplateParser } from './parser';
  */
 export class CommandTool {
   /**
-   * Command arguments.
+   * Directory to output into.
    */
-  _argv: CommandArguments | Promise<CommandArguments> | null = null;
+  _outDir = '.';
 
   /**
    * File path to template.
@@ -22,20 +23,18 @@ export class CommandTool {
    *
    * @param {CommandArguments | Promise<CommandArguments>} argv Command arguments.
    */
-  loadArgs(argv: CommandArguments | Promise<CommandArguments>) {
-    this._argv = argv;
-
+  loadArgs(argv: CommandArguments | Promise<CommandArguments>): void {
     const templatePath = 'template' in argv ? argv.template as string : '';
+    this._outDir = 'out' in argv ? argv.out as string : '.';
 
-    this._template = new TemplateParser(templatePath);
-
-    console.log(this._argv);
+    new TemplateParser(templatePath);
   }
 
   /**
    * Generates a backend off a template JSON.
    */
-  generate() {
+  async generate(): Promise<void> {
     console.log('generate');
+    const builder = new Builder(this._outDir);
   }
 }

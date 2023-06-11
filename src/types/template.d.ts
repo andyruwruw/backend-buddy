@@ -230,6 +230,36 @@ export interface TableConfig {
 }
 
 /**
+ * Indentation types.
+ */
+export type IndentationType = 'space' | 'tab';
+
+/**
+ * Types of new lines.
+ */
+export type NewLineType = 'LF' | 'CRLF';
+
+/**
+ * General style preferences.
+ */
+export interface StyleConfig {
+  /**
+   * Indention type.
+   */
+  'indentation-type': IndentationType;
+
+  /**
+   * How many of indention type to use.
+   */
+  'indentation-amount': number;
+
+  /**
+   * What character to use for new lines.
+   */
+  'new-line': NewLineType;
+}
+
+/**
  * Template for servers.
  */
 export interface ServerTemplate {
@@ -252,6 +282,16 @@ export interface ServerTemplate {
    * Types of databases to implement.
    */
   databases?: ServerDatabase[];
+
+  /**
+   * Style preferences.
+   */
+  style?: StyleConfig;
+
+  /**
+   * Whether to truncate existing files.
+   */
+  truncate?: boolean;
 
   /**
    * Whether to create tests.

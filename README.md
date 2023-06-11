@@ -18,4 +18,12 @@ Why work on my current projects when I can procrasinate and start a new project 
 
 # Usage
 
+```
+$ npx backend-buddy generate template.json
+```
+
+```
+$ npx backend-buddy generate template.json ./server
+```
+
 # System Design

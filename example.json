@@ -11,6 +11,12 @@
     "mongo",
     "cache"
   ],
+  "style": {
+    "indentation-type": "space",
+    "indentation-amount": 2,
+    "new-line": "LF"
+  },
+  "truncate": true,
   "testing": true,
   "linting": true,
   "functionalities": {
@@ -128,6 +134,45 @@
       "links": {
         "AlbumGenre": "Album",
         "ArtistGenre": "Artist"
+      },
+      "schema": [
+        {
+          "key": "id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "functions": {
+        "create": true,
+        "update": true,
+        "delete": true,
+        "get": true,
+        "get-many": true
+      }
+    },
+    {
+      "name": "Track",
+      "links": {
+        "PlaylistTrack": {
+          "table": "Track",
+          "additional-fields": [
+            {
+              "key": "added-at",
+              "type": "string",
+              "required": true
+            },
+            {
+              "key": "added-by",
+              "type": "string",
+              "required": true
+            },
+            {
+              "key": "local",
+              "type": "boolean",
+              "required": true
+            }
+          ]
+        }
       },
       "schema": [
         {
