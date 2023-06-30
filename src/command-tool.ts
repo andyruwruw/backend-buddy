@@ -1,6 +1,17 @@
+// Local Imports
+import { TemplateParser } from './parser';
+import {
+  ConfigBuilder,
+  DatabaseBuilder,
+  EndpointBuilder,
+  ErrorBuilder,
+  HandlerBuilder,
+  HelperBuilder,
+  TypesBuilder,
+} from './builders';
+
 // Types
 import { CommandArguments } from './types/template';
-import { TemplateParser } from './parser';
 import { Builder } from './builders/builder';
 
 /**
@@ -34,7 +45,24 @@ export class CommandTool {
    * Generates a backend off a template JSON.
    */
   async generate(): Promise<void> {
-    console.log('generate');
-    const builder = new Builder(this._outDir);
+    console.log('Generating');
+
+    const builders = [] as Builder[];
+
+    builders.push(new ConfigBuilder(this._outDir));
+    builders.push(new DatabaseBuilder(this._outDir));
+    builders.push(new EndpointBuilder(this._outDir));
+    builders.push(new ErrorBuilder(this._outDir));
+    builders.push(new HandlerBuilder(this._outDir));
+    builders.push(new HelperBuilder(this._outDir));
+    builders.push(new TypesBuilder(this._outDir));
+
+    const tasks = [];
+
+    for (let i = 0; i < builders.length; i += 1) {
+      tasks.push(builders[i].build());
+    }
+
+    await Promise.all(tasks);
   }
 }

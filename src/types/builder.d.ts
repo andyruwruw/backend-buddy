@@ -1,11 +1,8 @@
-/**
- * Class properties.
- */
-export interface ClassProperty {
+export interface Property {
   /**
    * Key of property.
    */
-  key: string;
+  key?: string;
 
   /**
    * Type of property.
@@ -15,13 +12,18 @@ export interface ClassProperty {
   /**
    * Default value of the property.
    */
-  value: any;
+  value?: any;
 
   /**
    * Comments describing the property.
    */
-  comment: string[] | string;
+  comment?: string[] | string;
+}
 
+/**
+ * Class properties.
+ */
+export interface ClassProperty extends Property {
   /**
    * Whether the property is private.
    */
@@ -32,3 +34,75 @@ export interface ClassProperty {
    */
   static: boolean;
 }
+
+/**
+ * Link to imports.
+ */
+export interface ExportLink {
+  /**
+   * Name of the item.
+   */
+  name: string;
+
+  /**
+   * Path to item from root.
+   */
+  path: string;
+
+  /**
+   * Whether the value needs to be deconstructed.
+   */
+  deconstruct: boolean;
+
+  /**
+   * Whether to export these values.
+   */
+  export: boolean;
+}
+
+export interface Method {
+  /**
+   * Name of the function.
+   */
+  name: string;
+
+  /**
+   * Description of function.
+   */
+  comment: string | string[];
+
+  /**
+   * Parameters to the function.
+   */
+  parameters: Property[];
+
+  /**
+   * What the method returns.
+   */
+  return: Property;
+
+  /**
+   * Whether the method is asynchronous.
+   */
+  async: boolean;
+
+  /**
+   * Whether to create an arrow function.
+   */
+  arrow: boolean;
+
+  /**
+   * Whether the method is private.
+   */
+  private: boolean;
+
+  /**
+   * lines of the method.
+   */
+  method: (string | MethodLineResolver)[];
+}
+
+/**
+ * Resolves to code lines.
+ */
+type MethodLineResolver = (...parameter: any) => string | string[];

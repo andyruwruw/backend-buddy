@@ -13,6 +13,11 @@ import {
  */
 export class ClassBuilder extends Builder {
   /**
+   * Description of the class.
+   */
+  _description: string;
+
+  /**
    * Name of the class.
    */
   _name: string;
@@ -35,11 +40,12 @@ export class ClassBuilder extends Builder {
   /**
    * Runs the builder.
    */
-  build(): string {
+  async build(): Promise<string> {
+    this._comment(this._description);
     this._buildHeader();
 
     this._buildProperties();
-    this._buildMethods();
+    await this._buildMethods();
 
     this._append('}');
     return this._buffer;
@@ -57,12 +63,59 @@ export class ClassBuilder extends Builder {
    * Builds the classes properties.
    */
   _buildProperties(): void {
+    this._properties.sort((
+      a: ClassProperty,
+      b: ClassProperty,
+    ): number => {
+      return a.key.localeCompare(b.key);
+    });
+
+    for (let i = 0; i < this._properties.length; i += 1) {
+      this._comment(this._properties[i].comment);
+
+      let line = '';
+
+      if (this._properties[i].static) {
+        line = line.concat('static ');
+      }
+      if (this._properties[i].private) {
+        // Pseudo private
+        line = line.concat('_');
+      }
+
+      line = line.concat(`${this._properties[i].key}: ${this._properties[i].type}`);
+
+      if (this._properties[i].value !== null) {
+        const value = JSON.stringify(
+          this._properties[i].value,
+          null,
+          2,
+        ).replace(
+          '"',
+          '\'',
+        );
+
+        line = line.concat(` = ${value}`);
+      }
+
+      line = line.concat(';');
+
+      this._append(line);
+      this._gap();
+    }
   }
 
   /**
    * Builds the classes methods.
    */
-  _buildMethods(): void {
+  async _buildMethods(): Promise<void> {
+    for (let i = 0; i < this._methods.length; i += 1) {
+      this._append(await this._methods[i].build());
+      
+      if (i < this._methods.length - 1) {
+        this._gap();
+      }
+    }
   }
 
   /**

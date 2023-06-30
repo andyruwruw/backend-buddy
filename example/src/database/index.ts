@@ -13,7 +13,6 @@ let DatabaseInstace: DatabaseClass | null = null;
 
 /**
  * Generates database based on environmental variables.
- *
  */
 const initializeDatabase = async (): Promise<void> => {
   if (!DatabaseInstace) {

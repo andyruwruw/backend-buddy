@@ -2,16 +2,16 @@
 import { Builder } from '../builder';
 
 /**
- * Builds the types sub-layer.
+ * Builds the config sub-layer.
  */
-export class TypesBuilder extends Builder {
+export class ConfigBuilder extends Builder {
   /**
-   * Instantiates a new types builder.
+   * Instantiates a new config builder.
    *
    * @param {string} currentDir Cursor to current directory.
    */
   constructor(currentDir: string) {
     super(currentDir);
-    this._outstanding.push(this._moveInto('types'));
+    this._moveInto('config');
   }
 }

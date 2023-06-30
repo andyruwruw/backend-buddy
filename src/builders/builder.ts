@@ -9,6 +9,11 @@ import { TemplateParser } from '../parser';
  */
 export class Builder {
   /**
+   * Outstanding promised tasks.
+   */
+  _outstanding: Promise<any>[] = [];
+
+  /**
    * Cursor to current directory.
    */
   _currentDir = '.';
@@ -40,7 +45,7 @@ export class Builder {
    */
   constructor(currentDir: string) {
     this._currentDir = currentDir;
-    this._readDir();
+    this._outstanding.push(this._readDir());
   }
 
   /**
@@ -55,8 +60,21 @@ export class Builder {
   /**
    * Runs the builder.
    */
-  build(): string {
+  async build(): Promise<string> {
+    await this._awaitTasks();
+
     return this._buffer;
+  }
+
+  /**
+   * Waits for outstanding tasks.
+   */
+  async _awaitTasks(): Promise<void> {
+    if (this._outstanding.length) {
+      await Promise.all(this._outstanding);
+    }
+
+    this._outstanding = [];
   }
 
   /**
@@ -65,10 +83,14 @@ export class Builder {
    * @param {string} name Name of directory.
    */
   async _moveInto(name: string): Promise<void> {
-    if (!(name in this._dirContents)) {
-      await this._createDir(name);
+    if (!this._dirContents.length) {
+      await this._readDir();
     }
 
+    if (!this._dirContents.includes(name)) {
+      await this._createDir(name);
+    }
+    console.log('Setting Directory', `${this._currentDir}/${name}`);
     this._currentDir = `${this._currentDir}/${name}`;
     await this._readDir();
   }
@@ -111,7 +133,7 @@ export class Builder {
    */
   async _writeToFile(): Promise<void> {
     await fs.writeSync(this._file, this._buffer);
-
+    this._buffer = '';
     await this._closeFile();
   }
 
@@ -141,7 +163,7 @@ export class Builder {
    * @param {string} text Text to append. 
    */
   _append(text: string): void {
-    this._buffer = this._buffer.concat(`${this._indentation}${text}${TemplateParser.newLine}`);
+    this._buffer = this._buffer.concat(`${this._indentation()}${text}${TemplateParser.newLine}`);
   }
 
   /**
@@ -177,5 +199,12 @@ export class Builder {
     }
     
     this._append(' */');
+  }
+
+  /**
+   * Adds imports to the top of the file.
+   */
+  _imports(): void {
+
   }
 }
